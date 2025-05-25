@@ -9,11 +9,17 @@
 ---
 
 Tài nguyên của challenge chỉ có 1 file `capture.pcap`. Lướt một tí trong wireshark thì thấy có package
+
 ![](asset/Red%20Trails/image/1.png)
+
 File này là một obfuscated shell script 
+
 ![](asset/Red%20Trails/image/2.png)
+
 Đổi nhẹ `eval` thành `echo` rồi chạy xem nó là gì
+
 ![](asset/Red%20Trails/image/3.png)
+
 Vẫn còn encode, decode tiếp phát nữa
 ```bash
 LQebW="ZWNobyAtZSAiXG5zc2gtcnNhIEFBQUFCM056YUMxeWMyRUFBQUFEQVFBQkFBQUNBUUM4VmtxOVVUS01ha0F4MlpxK1BuWk5jNm5ZdUVL"        
@@ -31,18 +37,28 @@ echo "$ABvnz$QOPjH$gQIxX" | base64 -d
 ```
 
 ![](asset/Red%20Trails/image/4.png)
+
 Tìm thấy phần đầu flag: `HTB{r3d15_1n574nc35`
 Đề bài cho biết flag có 3 phần, đi tìm tiếp trong file `pcap` thôi. 
 Follow TCP Stream của vài gói đầu thử xem, lướt xuống cuối thì thấy đoạn giữa ._.
+
 ![](asset/Red%20Trails/image/5.png)
+
 `FLAG_PART:_c0uld_0p3n_n3w`
 Hai phần flag đầu được tìm thấy trong tcp.stream eq 0 và 1, thử xem eq 2 có gì thì thấy lệnh tải file nhưng ban đầu không thấy file này trong Network Miner, phần data phía sau nhìn như mã hóa. Có lẽ đây là data mã hóa của file
+
 ![](asset/Red%20Trails/image/6.png)
+
 Lướt tiếp trong tcpstream, đến eq 6 thì thấy thêm thông tin mới
+
 ![](asset/Red%20Trails/image/7.png)
+
 Thấy loáng thoáng aes 256 mode cbc, chắc stream này chứa thông tin mã hóa của data trên. Lướt xuống tí nữa thì thấy hai value có vẻ như là key và IV
+
 ![](asset/Red%20Trails/image/8.png)
+
 Script decrypt
+
 ```python
 from Crypto.Cipher import AES
 import base64
@@ -60,8 +76,11 @@ plaintext = cipher.decrypt(ciphertext)
 
 print(plaintext.decode(errors="replace"))
 ```
+
 Thấy phần flag còn lại rồi
+
 ![](asset/Red%20Trails/image/9.png)
+
 Flag: `HTB{r3d15_1n574nc35_c0uld_0p3n_n3w_un3xp3c73d_7r41l5!}`
 
 ---
