@@ -38,7 +38,7 @@ echo "$ABvnz$QOPjH$gQIxX" | base64 -d
 
 ![](asset/Red%20Trails/image/4.png)
 
-Tìm thấy phần đầu flag: `HTB{r3d15_1n574nc35`
+Tìm thấy phần đầu flag: `HTB{r3d15_1n574nc35`.
 Đề bài cho biết flag có 3 phần, đi tìm tiếp trong file `pcap` thôi. 
 Follow TCP Stream của vài gói đầu thử xem, lướt xuống cuối thì thấy đoạn giữa ._.
 
